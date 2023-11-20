@@ -41,17 +41,17 @@ public class SplayTree {
                 return node;
             }
             if (node.getRight().getValue() > value) {
-                // Zig-Zag (Right Left case)
+                // Zag-Zag (Right Left case)
                 node.getRight().setLeft(splay(node.getRight().getLeft(), value));
                 if (node.getRight().getLeft() != null) {
                     node.setRight(rightRotate(node.getRight()));
                 }
             } else if (node.getRight().getValue() < value) {
-                // Zig-Zig (Right Right case)
+                // Zag-Zig (Right Right case)
                 node.getRight().setRight(splay(node.getRight().getRight(), value));
                 node = leftRotate(node);
             }
-            // Zig (Right case)
+            // Zag (Right case)
             return (node.getRight() == null) ? node : leftRotate(node);
         }
     }
