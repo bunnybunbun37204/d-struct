@@ -41,13 +41,13 @@ public class SplayTree {
                 return node;
             }
             if (node.getRight().getValue() > value) {
-                // Zag-Zag (Right Left case)
+                // Zag-Zig (Right Left case)
                 node.getRight().setLeft(splay(node.getRight().getLeft(), value));
                 if (node.getRight().getLeft() != null) {
                     node.setRight(rightRotate(node.getRight()));
                 }
             } else if (node.getRight().getValue() < value) {
-                // Zag-Zig (Right Right case)
+                // Zag-Zag (Right Right case)
                 node.getRight().setRight(splay(node.getRight().getRight(), value));
                 node = leftRotate(node);
             }
