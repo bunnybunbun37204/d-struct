@@ -24,28 +24,34 @@ public class SplayTree {
                 return node;
             }
             if (node.getLeft().getValue() > value) {
+                // Zig-Zig (Left Left case)
                 node.getLeft().setLeft(splay(node.getLeft().getLeft(), value));
                 node = rightRotate(node);
             } else if (node.getLeft().getValue() < value) {
+                // Zig-Zag (Left Right case)
                 node.getLeft().setRight(splay(node.getLeft().getRight(), value));
                 if (node.getLeft().getRight() != null) {
                     node.setLeft(leftRotate(node.getLeft()));
                 }
             }
+            // Zig (Left case)
             return (node.getLeft() == null) ? node : rightRotate(node);
         } else {
             if (node.getRight() == null) {
                 return node;
             }
             if (node.getRight().getValue() > value) {
+                // Zig-Zag (Right Left case)
                 node.getRight().setLeft(splay(node.getRight().getLeft(), value));
                 if (node.getRight().getLeft() != null) {
                     node.setRight(rightRotate(node.getRight()));
                 }
             } else if (node.getRight().getValue() < value) {
+                // Zig-Zig (Right Right case)
                 node.getRight().setRight(splay(node.getRight().getRight(), value));
                 node = leftRotate(node);
             }
+            // Zig (Right case)
             return (node.getRight() == null) ? node : leftRotate(node);
         }
     }
