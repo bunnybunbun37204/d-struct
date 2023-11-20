@@ -86,24 +86,28 @@ public class SplayTree {
     }
 
     private BTNode delete(BTNode node, int value) {
-        BTNode temp;
         if (node == null) {
-            return node;
+            return null;
         }
+
+        // Splay the tree to bring the node to the root
         node = splay(node, value);
+
+        // If the value is not found, no need to delete
         if (value != node.getValue()) {
             return node;
         }
+
+        // If the node has a left child
         if (node.getLeft() != null) {
-            temp = node;
-            node = node.getRight();
-        } else {
-            temp = node;
+            BTNode temp = node;
             node = splay(node.getLeft(), value);
-            if (node != null) {
-                node.setLeft(temp.getRight()); // Fix this line
-            }
+            node.setRight(temp.getRight());
+        } else {
+            // If the node has no left child, simply make the right child the new root
+            node = node.getRight();
         }
+
         return node;
     }
 

@@ -17,6 +17,16 @@ public class Main {
         System.out.println();
         tree.remove(15);
         tree.printTree();
+        System.out.println();
+        SplayTree tree2 = new SplayTree();
+        tree2.add(8);
+        tree2.add(4);
+        tree2.add(7);
+        tree2.add(40);
+        tree2.add(15);
+        tree2.add(13);
+        tree2.add(13);
+        tree2.printTree();
 
     }
 }
