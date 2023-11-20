@@ -1,3 +1,35 @@
+class BTNode {
+    private int value;
+    private BTNode left;
+    private BTNode right;
+
+    public BTNode(int value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public BTNode getLeft() {
+        return left;
+    }
+
+    public void setLeft(BTNode left) {
+        this.left = left;
+    }
+
+    public BTNode getRight() {
+        return right;
+    }
+
+    public void setRight(BTNode right) {
+        this.right = right;
+    }
+}
+
 public class SplayTree {
     BTNode root;
 
@@ -19,39 +51,34 @@ public class SplayTree {
         if (node == null || node.getValue() == value) {
             return node;
         }
+
         if (node.getValue() > value) {
             if (node.getLeft() == null) {
                 return node;
             }
             if (node.getLeft().getValue() > value) {
-                // Zig-Zig (Left Left case)
                 node.getLeft().setLeft(splay(node.getLeft().getLeft(), value));
                 node = rightRotate(node);
             } else if (node.getLeft().getValue() < value) {
-                // Zig-Zag (Left Right case)
                 node.getLeft().setRight(splay(node.getLeft().getRight(), value));
                 if (node.getLeft().getRight() != null) {
                     node.setLeft(leftRotate(node.getLeft()));
                 }
             }
-            // Zig (Left case)
             return (node.getLeft() == null) ? node : rightRotate(node);
         } else {
             if (node.getRight() == null) {
                 return node;
             }
             if (node.getRight().getValue() > value) {
-                // Zag-Zig (Right Left case)
                 node.getRight().setLeft(splay(node.getRight().getLeft(), value));
                 if (node.getRight().getLeft() != null) {
                     node.setRight(rightRotate(node.getRight()));
                 }
             } else if (node.getRight().getValue() < value) {
-                // Zag-Zag (Right Right case)
                 node.getRight().setRight(splay(node.getRight().getRight(), value));
                 node = leftRotate(node);
             }
-            // Zag (Right case)
             return (node.getRight() == null) ? node : leftRotate(node);
         }
     }
@@ -60,23 +87,25 @@ public class SplayTree {
         if (node == null) {
             return new BTNode(value);
         }
-        node = splay(node, value);
 
-        if (node.getValue() == value) {
-            return node;
+        node = insertWithoutSplay(node, value); // Add the node without splaying
+        node = splay(node, value); // Splay the tree after adding the node
+
+        return node;
+    }
+
+    private BTNode insertWithoutSplay(BTNode node, int value) {
+        if (node == null) {
+            return new BTNode(value);
         }
 
-        BTNode nBtNode = new BTNode(value);
-        if (node.getValue() > value) {
-            nBtNode.setRight(node);
-            nBtNode.setLeft(node.getLeft());
-            node.setLeft(null);
-        } else {
-            nBtNode.setLeft(node);
-            nBtNode.setRight(node.getRight()); // Fix the typo here (remove setRight(null))
-            node.setRight(null); // This line is not necessary and can be removed
+        if (value < node.getValue()) {
+            node.setLeft(insertWithoutSplay(node.getLeft(), value));
+        } else if (value > node.getValue()) {
+            node.setRight(insertWithoutSplay(node.getRight(), value));
         }
-        return nBtNode; // Return the new node instead of the original 'node'
+
+        return node;
     }
 
     public void add(int value) {
@@ -96,21 +125,17 @@ public class SplayTree {
             return null;
         }
 
-        // Splay the tree to bring the node to the root
         node = splay(node, value);
 
-        // If the value is not found, no need to delete
         if (value != node.getValue()) {
             return node;
         }
 
-        // If the node has a left child
         if (node.getLeft() != null) {
             BTNode temp = node;
             node = splay(node.getLeft(), value);
             node.setRight(temp.getRight());
         } else {
-            // If the node has no left child, simply make the right child the new root
             node = node.getRight();
         }
 

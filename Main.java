@@ -25,7 +25,8 @@ public class Main {
         tree2.add(40);
         tree2.add(15);
         tree2.add(13);
-        tree2.add(13);
+        tree2.add(16);
+        tree2.add(1);
         tree2.printTree();
 
     }
