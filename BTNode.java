@@ -1,4 +1,4 @@
-public class BTNode {
+class BTNode {
     private int value, height = 0;
     private BTNode left, right;
 

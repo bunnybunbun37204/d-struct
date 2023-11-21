@@ -174,6 +174,8 @@ public class AVLTree {
 
         // Update Height
         node.setHeight(max(height(node.getLeft()), height(node.getRight())));
+        System.out.println();
+        printTree();
         return balanceNode(node, value);
     }
 
@@ -189,6 +191,7 @@ public class AVLTree {
         if (node != null) {
             System.out.print(node.getValue() + ", ");
             preOrder(node.getLeft());
+            System.out.print("sp");
             preOrder(node.getRight());
         }
     }

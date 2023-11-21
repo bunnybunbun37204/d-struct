@@ -4,29 +4,21 @@
 public class Main {
 
     public static void main(String[] args) {
-        SplayTree tree = new SplayTree();
-        tree.add(50);
-        tree.add(20);
-        tree.add(10);
+        AVLTree tree = new AVLTree();
+        tree.add(8);
+        tree.add(6);
+        tree.add(7);
+        tree.add(2);
         tree.add(5);
-        tree.add(15);
+        tree.remove(7);
         tree.printTree();
         System.out.println();
-        tree.add(3);
-        tree.printTree();
-        System.out.println();
-        tree.remove(15);
-        tree.printTree();
-        System.out.println();
-        SplayTree tree2 = new SplayTree();
-        tree2.add(8);
-        tree2.add(4);
-        tree2.add(7);
-        tree2.add(40);
-        tree2.add(15);
-        tree2.add(13);
-        tree2.add(16);
+        AVLTree tree2 = new AVLTree();
+        tree2.add(3);
+        tree2.add(2);
         tree2.add(1);
+        tree2.add(4);
+        // tree2.remove(4);
         tree2.printTree();
 
     }
